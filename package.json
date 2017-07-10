@@ -1,0 +1,33 @@
+{
+  "name": "reachout",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "mongoose": "^4.7.1",
+    "morgan": "^1.8.2",
+    "uuid": "^3.1.0"
+  },
+  "devDependencies": {
+    "chai": "^4.0.2",
+    "chai-http": "^3.0.0",
+    "faker": "^4.1.0",
+    "mocha": "^3.4.2"
+  },
+  "scripts": {
+    "test": "mocha",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Redrogue12/ReachOut.git"
+  },
+  "author": "Red",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Redrogue12/ReachOut/issues"
+  },
+  "homepage": "https://github.com/Redrogue12/ReachOut#readme"
+}
