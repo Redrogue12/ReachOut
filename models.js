@@ -9,23 +9,23 @@ const userSchema = mongoose.Schema({
   username: {
     type: String,
     required: true,
-    unique: true
-  },
-  password: {
-    type: String,
-    required: true
-  },
-  contacts: []
+    unique: true}
+  // },
+  // password: {
+  //   type: String,
+  //   required: true
+  // },
+  // contacts: []
 });
 
 userSchema.virtual('fullName').get(function() {
-  return `${this.author.firstName} ${this.author.lastName}`.trim();
+  return `${this.name.firstName} ${this.name.lastName}`.trim();
 });
 
-userSchema.methods.apiRepr = () => {
+userSchema.methods.apiRepr = function() {
   return {
-    username: this.username || '',
-    name: this.fullName || ''
+    username: this.username,
+    name: this.fullName
   };
 }
 
