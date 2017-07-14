@@ -1,25 +1,32 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
+mongoose.Promise = global.Promise;
+
 const userSchema = mongoose.Schema({
-  name: {
-    firstName: {type: String, default: ""},
-    lastName: {type: String, default: ""}
+
+  firstName: {
+    type: String,
+    default: ""
+  },
+  lastName: {
+    type: String,
+    default: ""
   },
   username: {
     type: String,
     required: true,
-    unique: true}
-  // },
-  // password: {
-  //   type: String,
-  //   required: true
-  // },
-  // contacts: []
+    unique: true
+  },
+  password: {
+    type: String,
+    required: true
+  },
+  contacts: []
 });
 
 userSchema.virtual('fullName').get(function() {
-  return `${this.name.firstName} ${this.name.lastName}`.trim();
+  return `${this.firstName} ${this.lastName}`.trim();
 });
 
 userSchema.methods.apiRepr = function() {
@@ -29,12 +36,13 @@ userSchema.methods.apiRepr = function() {
   };
 }
 
-userSchema.methods.validatePassword = (password) => {
+userSchema.methods.validatePassword = function(password) {
   return bcrypt.compare(password, this.password);
 }
 
-userSchema.statics.hashPassword = (password) => {
-  return bcryt.hash(password, 10);
+userSchema.statics.hashPassword = function(password) {
+  console.log("anything");
+  return bcrypt.hash(password, 10);
 }
 
 const User = mongoose.model('User', userSchema);
