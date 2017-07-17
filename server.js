@@ -3,7 +3,8 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 
-const {router: usersRouter} = require('./users/router');
+const {userRouter: usersRouter} = require('./users/router');
+const {eventRouter: eventsRouter} = require('./events/router');
 
 // Converting mongoose promises into normal promises
 mongoose.Promise = global.Promise;
@@ -17,12 +18,12 @@ const app = express();
 app.use(morgan('common'));
 
 app.use('/users/', usersRouter);
+app.use('/events/', eventsRouter)
 
 // Serve static public files
 app.use(express.static('public'));
 
 // Users routing file
-
 
 app.listen(process.env.PORT || 8080);
 mongoose.connect(DATABASE_URL);
