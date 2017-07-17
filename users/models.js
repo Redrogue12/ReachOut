@@ -3,6 +3,8 @@ const bcrypt = require('bcryptjs');
 
 mongoose.Promise = global.Promise;
 
+// USERS MODEL
+
 const userSchema = mongoose.Schema({
 
   firstName: {
