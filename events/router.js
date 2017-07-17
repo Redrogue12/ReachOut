@@ -7,7 +7,7 @@ const eventRouter = express.Router();
 
 eventRouter.use(jsonParser);
 
-// Events GET ENDPOINT
+// Events GET Endpoints
 eventRouter.get('/', (req, res) => {
   Event
     .find()
@@ -31,5 +31,33 @@ eventRouter.get('/:id', (req, res) => {
       res.status(500).json({error: 'There was an error retrieving your event'});
     });
 });
+
+// Events POST Endpoints
+eventRouter.post('/', (req, res) => {
+  const requiredFields = ['name', 'location', 'date', 'userId'];
+  for (let i=0; i<requiredFields.length; i++) {
+    const field = requiredFields[i];
+    if (!(field in req.body)) {
+      const message = `Missing \`${field}\` in request body`
+      console.error(message);
+      return res.status(400).send(message);
+    }
+  }
+
+  Event
+    .create({
+      name: req.body.name,
+      location: req.body.location,
+      date: req.body.date,
+      userId: req.body.userId
+    })
+    .then(event => res.status(201).json(event))
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({error: 'Error. Create event unsuccessful'});
+    });
+});
+
+
 
 module.exports = {eventRouter};
