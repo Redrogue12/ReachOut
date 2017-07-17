@@ -58,6 +58,18 @@ eventRouter.post('/', (req, res) => {
     });
 });
 
-
+// Events DELETE Endpoint
+eventRouter.delete('/:id', (req, res) => {
+  Event
+    .findByIdAndRemove(req.params.id)
+    .exec()
+    .then(() => {
+      res.status(204).json({message: 'Delete successful'});
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({error: 'Error. Delete was not successful'})
+    });
+});
 
 module.exports = {eventRouter};
