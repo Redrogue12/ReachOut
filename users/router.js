@@ -5,11 +5,11 @@ const passport = require('passport');
 
 const{User} = require('./models');
 
-const router = express.Router();
+const userRouter = express.Router();
 
-router.use(jsonParser);
+userRouter.use(jsonParser);
 
-router.use(passport.initialize());
+userRouter.use(passport.initialize());
 
 // BASIC STRATEGY
 const basicStrategy = new BasicStrategy((username, password, callback) => {
@@ -38,7 +38,7 @@ const basicStrategy = new BasicStrategy((username, password, callback) => {
 passport.use(basicStrategy);
 
 // Users POST endpoint
-router.post('/', (req, res) => {
+userRouter.post('/', (req, res) => {
   if (!req.body) {
     return res.status(400).json({message: 'No request body'});
   }
@@ -107,7 +107,7 @@ router.post('/', (req, res) => {
 });
 
 // Users GET ENDPOINTS
-router.get('/', (req, res) => {
+userRouter.get('/', (req, res) => {
   User
     .find()
     .exec()
@@ -120,9 +120,9 @@ router.get('/', (req, res) => {
     });
 });
 
-router.get('/me',
+userRouter.get('/me',
   passport.authenticate('basic', {session: false}),
   (req, res) => res.json({user: req.user.apiRepr()})
 );
 
-module.exports = {router};
+module.exports = {userRouter};
