@@ -72,4 +72,27 @@ eventRouter.delete('/:id', (req, res) => {
     });
 });
 
+// Events PUT Endpoint
+eventRouter.put('/:id', (req, res) => {
+  if (!(req.params.id && req.body.id && req.params.id === req.body.id)) {
+    res.status(400).json({
+      error: 'Request path id and request body id values must match'
+    });
+  }
+
+  const updated = {};
+  const updateableFields = ['name', 'location', 'date'];
+  updateableFields.forEach(field => {
+    if (field in req.body) {
+      updated[field] = req.body[field];
+    }
+  });
+
+  Event
+    .findByIdAndUpdate(req.params.id, {$set: updated}, {new: true})
+    .exec()
+    .then(updatedEvent => res.status(201).json(updatedEvent))
+    .catch(err => res.status(500).json({message: 'Error updating event'}));
+});
+
 module.exports = {eventRouter};
